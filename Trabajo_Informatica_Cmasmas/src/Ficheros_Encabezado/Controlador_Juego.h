@@ -1,4 +1,23 @@
 #pragma once
+
+//INCLUSION DE FICHEROS Y LIBRERIAS //
+
+// Librerias de OpenGL //
+#include <freeglut.h>
+
+// Otras Librerias //
+
+#include <algorithm> // Para std::min y std::max //
+#include <cmath> // Para std::lround //      
+#include <iostream> // Para std::cout y std::endl //
+
+// Ficheros de Encabezado //
+
+#include "funciones_globales.h"
+#include "Vector_2D.h"
+
+#include "Boton.h"
+
 class Controlador_Juego
 {
 	enum class Estados_Juego
@@ -25,6 +44,8 @@ class Controlador_Juego
 public:
 
 	void iniciar_Controlador();
+
+	void iniciar_Estado();
 
 	void dibujar_Estado();
 
