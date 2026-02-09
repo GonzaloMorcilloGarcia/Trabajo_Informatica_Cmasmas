@@ -7,13 +7,15 @@
 
 #include <algorithm> // Para std::min y std::max //
 #include <cmath> // Para std::lround //      
+#include <iostream> // Para std::cout y std::endl //
 
 // Ficheros de Encabezado //
 
 #include "funciones_globales.h"
 #include "Vector_2D.h"
 
-// DECLARACION DE CLASES GLOBALES //
+#include "Rectangulo.h"
+#include "Boton.h"
 
 // DECLARACION DE VARIABLES GLOBALES //
 
@@ -48,7 +50,7 @@ struct Viewport
 
     bool ContainsViewport(int coordenada_x, int coordenada_y) const
     {
-        return Contiene(coordenada_x, coordenada_y, x, y, w, h);
+        return Contiene({coordenada_x, coordenada_y}, x, y, w, h);
     }
 
     
@@ -75,6 +77,18 @@ struct Viewport
 };
 
 Viewport viewport{0, 0, 1, 1}; // Variable global para almacenar el viewport actual del juego, que se actualizará en la función de reshape //
+
+// DECLARACION DE CLASES GLOBALES //
+
+Boton boton_ejemplo 
+{
+    {VIRTUAL_W/2, VIRTUAL_W/2},
+    20, 20,
+    {255, 0, 0},
+	{0, 0, 0},
+	2
+};
+
 
 // PROTOTIPOS DE FUNCIONES DE GLUT //
 
@@ -148,9 +162,9 @@ void OnDisplay()
 
 	glLoadIdentity(); // Reinicia la matriz de modelo para que no haya transformaciones acumuladas //
 
-	// Aquí se pueden dibujar los elementos del juego, el menú, el tablero, etc. dependiendo del estado actual del juego //
+	// Aquí se pueden dibujar los elementos del juego, el menú, el tablero, etc. dependiendo del estado actual del juego // 
 
- 
+	boton_ejemplo.dibujar_Boton();
 
 	glutSwapBuffers(); // Intercambia los buffers para mostrar lo que se ha dibujado en la pantalla //
 }
@@ -187,6 +201,11 @@ void OnMouse(int button, int state, int x, int y)
         if (inside)
         {
             // click izquierdo en área de juego (mouseV.x, mouseV.y)
+
+            if (boton_ejemplo.Contiene_Coordenadas(coordenadas_mouse))
+            {
+				std::cout << "¡Botón Ejemplo Presionado!" << std::endl;
+			}
         }
     }
     else if (button == GLUT_RIGHT_BUTTON)

@@ -2,6 +2,6 @@
 
 struct Vector_2D
 {
-	int x;
-	int y;
+	int x {};
+	int y {};
 };

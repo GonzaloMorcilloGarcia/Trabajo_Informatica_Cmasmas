@@ -1,1 +1,40 @@
-/Trabajo_Informatica_Cmasmas/tmp
+# --------------------------
+# Visual Studio (caches)
+# --------------------------
+.vs/
+**/.vs/
+*.ipch
+*.opendb
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# User-specific files
+*.user
+*.suo
+
+# --------------------------
+# Build outputs
+# --------------------------
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+**/bin/
+**/obj/
+**/build/
+**/tmp/
+
+# --------------------------
+# C/C++ artifacts
+# --------------------------
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+*.tlog
+*.idb
+
+
