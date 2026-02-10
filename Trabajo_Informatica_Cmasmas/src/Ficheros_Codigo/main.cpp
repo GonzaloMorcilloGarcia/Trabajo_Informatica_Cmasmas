@@ -16,14 +16,11 @@
 
 #include "Rectangulo.h"
 #include "Boton.h"
+#include "Controlador_Juego.h"
 
 // DECLARACION DE VARIABLES GLOBALES //
 
-constexpr int VIRTUAL_W = 1920;
-constexpr int VIRTUAL_H = 1080;
 
-constexpr int FPS = 60;
-constexpr int FRAME_MS = 1000 / FPS;
 
 // DEFINICIÓN DE ESTRUCTURAS GLOBALES //
 
@@ -80,15 +77,7 @@ Viewport viewport{0, 0, 1, 1}; // Variable global para almacenar el viewport act
 
 // DECLARACION DE CLASES GLOBALES //
 
-Boton boton_ejemplo 
-{
-    {VIRTUAL_W/2, VIRTUAL_W/2},
-    20, 20,
-    {255, 0, 0},
-	{0, 0, 0},
-	2
-};
-
+Controlador_Juego controlador_juego{};
 
 // PROTOTIPOS DE FUNCIONES DE GLUT //
 
@@ -107,12 +96,16 @@ void init_Juego();
 
 int main(int argc, char** argv)
 {
-	// Inicialización del Programa y la Ventana //
+    // Inicialización del Programa y la Ventana //
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+
     glutInitWindowSize(VIRTUAL_W / 2, VIRTUAL_H / 2);
     glutCreateWindow("Trabajo de Informatica Cmasmas: NOMBRE POR DEFINIR");
+
+    // Callbacks
 
     glutDisplayFunc(OnDisplay);
     glutReshapeFunc(OnReshape);
@@ -120,15 +113,29 @@ int main(int argc, char** argv)
     glutMouseFunc(OnMouse);
     glutPassiveMotionFunc(OnPassiveMouseMotion);
 
+    // Color de fondo
+
     glClearColor(1.f, 1.f, 1.f, 1.f);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
+    // 2D: Asegura que NO haya profundidad
+
+    glDisable(GL_DEPTH_TEST); 
+
+    // (opcional, pero recomendado) Desactiva iluminación y texturas en UI 2D
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
+
+    // Alpha blending (útil para transparencias)
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // Init juego
+
     init_Juego();
+
+    // Timer
 
     glutTimerFunc(FRAME_MS, OnTimer, 0);
 
@@ -142,6 +149,8 @@ int main(int argc, char** argv)
 void init_Juego ()
 {
 	// Aquí se pueden inicializar variables, cargar recursos, etc. antes de entrar en el bucle principal //
+
+    controlador_juego.iniciar_Controlador();
 }
 
 // FUNCIONES DE GLUT //
@@ -164,7 +173,7 @@ void OnDisplay()
 
 	// Aquí se pueden dibujar los elementos del juego, el menú, el tablero, etc. dependiendo del estado actual del juego // 
 
-	boton_ejemplo.dibujar_Boton();
+    controlador_juego.dibujar_Estado();
 
 	glutSwapBuffers(); // Intercambia los buffers para mostrar lo que se ha dibujado en la pantalla //
 }
@@ -181,6 +190,8 @@ void OnReshape(int width, int height)
 void OnKeyboard(unsigned char key, int x, int y)
 {
 	// Aquí se pueden manejar las entradas del teclado para controlar el juego, navegar por el menú, etc. //
+
+    controlador_juego.actualizar_Estado(key);
 
     
 	glutPostRedisplay(); // Solicita a GLUT que vuelva a dibujar la pantalla después de procesar la entrada del teclado //
@@ -202,10 +213,7 @@ void OnMouse(int button, int state, int x, int y)
         {
             // click izquierdo en área de juego (mouseV.x, mouseV.y)
 
-            if (boton_ejemplo.Contiene_Coordenadas(coordenadas_mouse))
-            {
-				std::cout << "¡Botón Ejemplo Presionado!" << std::endl;
-			}
+            controlador_juego.actualizar_Estado(coordenadas_mouse, true);
         }
     }
     else if (button == GLUT_RIGHT_BUTTON)
@@ -227,7 +235,7 @@ void OnPassiveMouseMotion(int x, int y)
 
 	if (inside) // Si el mouse está dentro del área de juego, se pueden usar las coordenadas virtuales (coordenadas_mouse.x, coordenadas_mouse.y) para interactuar con el juego, como resaltar casillas, mostrar información, etc. //
     {
-        
+		controlador_juego.actualizar_Hover(coordenadas_mouse); // Actualiza el estado de hover del juego con las coordenadas virtuales del mouse //
     }
 
 	glutPostRedisplay(); // Solicita a GLUT que vuelva a dibujar la pantalla después de procesar el movimiento del mouse //

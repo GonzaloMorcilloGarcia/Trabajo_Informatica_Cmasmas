@@ -45,18 +45,26 @@ public:
 
 	void iniciar_Controlador();
 
+	void cambiar_Estado(Estados_Juego estado_siguiente);
+
 	void iniciar_Estado();
 
 	void dibujar_Estado();
 
-	void actualizar_Estado();
+	void actualizar_Estado(unsigned char key);
+
+	void actualizar_Estado(Vector_2D coordenadas_mouse, bool leftClick);
+
+	void actualizar_Hover(Vector_2D coordenadas_mouse);
 
 	Estados_Juego get_Estado_Actual() const { return Estado_Actual; }
 
 private:
 
-	Estados_Juego Estado_Actual;
+	Estados_Juego Estado_Actual, Estado_Siguiente;	
 
-	
+	Boton Boton_Jugar{}, Boton_Ajustes{}, Boton_Salir{}, Boton_Musica{}, Boton_Anterior{}, Boton_Pausa{}, Boton_Siguiente{};
+
+	Boton Boton_Menu_Principal{}, Boton_Creditos{};
 };
 

@@ -34,7 +34,13 @@ void Rectangulo::dibujar_Rectangulo()
 
 	// Color del Rectángulo //
 
-    glColor3f(color_rectangulo.color_red, color_rectangulo.color_green, color_rectangulo.color_blue);
+	glColor3ub
+	(
+		(GLubyte)color_rectangulo.color_red,
+		(GLubyte)color_rectangulo.color_green,
+		(GLubyte)color_rectangulo.color_blue
+	);
+
 
     // Dibujo del Rectángulo Relleno //
 

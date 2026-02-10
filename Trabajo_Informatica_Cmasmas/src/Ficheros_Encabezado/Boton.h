@@ -10,6 +10,7 @@
 
 #include <algorithm> // Para std::min y std::max //
 #include <cmath> // Para std::lround //      
+#include <string> 
 
 // Ficheros de Encabezado //
 
@@ -26,14 +27,26 @@ class Boton
 
 	int ancho_boton {}, alto_boton {}, ancho_borde {};
 
+	Color color_predeterminado_boton{};
+
+	std::string texto_boton{};
+
+	bool resaltado_boton{};
+	
+
 public:
 
 	Boton();
 
-	Boton (Vector_2D centro, float ancho, float alto, Color color_interior, Color color_borde, int ancho_borde);
+	Boton (Vector_2D centro, float ancho, float alto, Color color_predeterminado, int ancho_borde, std::string texto);
 
 	void dibujar_Boton();
 
+	void actualizar_Hover(Vector_2D coordenada_mouse);
+
 	bool Contiene_Coordenadas(Vector_2D coordenada);
+
+	void Resaltar_Boton(Vector_2D coordenada);
+
 };
 
