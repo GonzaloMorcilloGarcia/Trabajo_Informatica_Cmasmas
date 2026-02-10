@@ -29,6 +29,7 @@
   <ItemGroup>
     <ClCompile Include="src\Ficheros_Codigo\Boton.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Controlador_Juego.cpp" />
+    <ClCompile Include="src\Ficheros_Codigo\funciones_globales.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\main.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Rectangulo.cpp" />
   </ItemGroup>

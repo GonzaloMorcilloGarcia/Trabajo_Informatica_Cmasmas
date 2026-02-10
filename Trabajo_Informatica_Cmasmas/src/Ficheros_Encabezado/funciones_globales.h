@@ -8,7 +8,8 @@
 
 // Otras Librerias //
 
-#include <string> 
+#include <string>
+#include "ETSIDI.h"
 
 // Ficheros de Encabezado //
 
@@ -54,3 +55,5 @@ inline int calcular_Ancho_Texto(const std::string& texto, void* fuente)
     }
     return ancho_Total;
 }
+
+void dibujar_Fondo(GLuint texId);

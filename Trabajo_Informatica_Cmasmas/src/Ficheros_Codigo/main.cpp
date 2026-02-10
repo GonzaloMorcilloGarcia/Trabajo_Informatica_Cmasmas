@@ -157,25 +157,28 @@ void init_Juego ()
 
 void OnDisplay()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Limpia la pantalla y el buffer de profundidad //
-    
-	glViewport(viewport.x, viewport.y, viewport.w, viewport.h); // Establece el viewport actual para que coincida con el área de dibujo del juego, dejando las barras negras a los lados si es necesario //
+    // 1) Limpia TODA la ventana (barras incluidas) a negro
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_PROJECTION); // Configura la matriz de proyección para que coincida con las coordenadas virtuales del juego, independientemente del tamaño real de la ventana //
+    // 2) Activa el viewport del juego (manteniendo aspecto)
+    glViewport(viewport.x, viewport.y, viewport.w, viewport.h);
 
-	glLoadIdentity(); // Reinicia la matriz de proyección para que no haya transformaciones acumuladas //
+    // 3) Proyección ortográfica en coordenadas virtuales
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, VIRTUAL_W, 0, VIRTUAL_H);
 
-	gluOrtho2D(0, VIRTUAL_W, 0, VIRTUAL_H); // Establece una proyección ortográfica con el origen en la esquina inferior izquierda y las coordenadas que van de 0 a VIRTUAL_W en el eje X y de 0 a VIRTUAL_H en el eje Y //
+    // 4) Modelo identidad
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	glMatrixMode(GL_MODELVIEW); // Configura la matriz de modelo para que esté lista para dibujar los elementos del juego en las coordenadas virtuales //
-
-	glLoadIdentity(); // Reinicia la matriz de modelo para que no haya transformaciones acumuladas //
-
-	// Aquí se pueden dibujar los elementos del juego, el menú, el tablero, etc. dependiendo del estado actual del juego // 
-
+    // 5) Dibujo del estado actual
     controlador_juego.dibujar_Estado();
 
-	glutSwapBuffers(); // Intercambia los buffers para mostrar lo que se ha dibujado en la pantalla //
+    // 6) Swap buffers
+    glutSwapBuffers();
 }
 
 void OnReshape(int width, int height)

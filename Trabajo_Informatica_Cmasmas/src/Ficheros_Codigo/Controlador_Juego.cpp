@@ -5,6 +5,9 @@ void Controlador_Juego::iniciar_Controlador()
 {
 	Estado_Actual = Estados_Juego::PANTALLA_TITULO;
 
+	 Fondo_Pantalla_Titulo = ETSIDI::getTexture("imagenes/Pantalla_Titulo.png").id;
+	 Fondo_Pantalla_Menu = ETSIDI::getTexture("imagenes/Pantalla_Menu.png").id;
+
 	iniciar_Estado();
 }
 
@@ -31,7 +34,7 @@ void Controlador_Juego::iniciar_Estado()
 	{
 		Boton_Jugar =
 		{
-			{310, 870},
+			{350, 870},
 			560, 120,
 			{0, 255, 0},
 			10,
@@ -40,7 +43,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Ajustes =
 		{
-			{310, 705},
+			{350, 705},
 			560, 120,
 			{0, 255, 0},
 			10,
@@ -49,7 +52,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Salir =
 		{
-			{310, 540},
+			{350, 540},
 			560, 120,
 			{0, 255, 0},
 			10,
@@ -58,7 +61,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Musica =
 		{
-			{310, 375},
+			{350, 375},
 			560, 120,
 			{0, 255, 0},
 			10,
@@ -69,7 +72,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Anterior =
 		{
-			{115, 210},
+			{155, 210},
 			170, 120,
 			{0, 255, 0},
 			8,
@@ -78,7 +81,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Pausa =
 		{
-			{310, 210},
+			{350, 210},
 			170, 120,
 			{0, 255, 0},
 			8,
@@ -87,7 +90,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Siguiente =
 		{
-			{505, 210},
+			{545, 210},
 			170, 120,
 			{0, 255, 0},
 			8,
@@ -126,8 +129,8 @@ void Controlador_Juego::iniciar_Estado()
 	{
 		Boton_Menu_Principal = 
 		{
-			{VIRTUAL_W/2, VIRTUAL_H/2},
-			200, 50,
+			{350, 870},
+			560, 120,
 			{0, 255, 0},
 			5,
 			"Menu Principal"
@@ -135,16 +138,16 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Creditos =
 		{
-			{VIRTUAL_W/2, VIRTUAL_H/2 - 100},
-			200, 50,
+			{350, 705},
+			560, 120,
 			{0, 255, 0},
 			5,
-			"Créditos"
+			"Creditos"
 		};
 			Boton_Salir =
 		{
-			{VIRTUAL_W/2, VIRTUAL_H/2 - 200},
-			200, 50,
+			{350, 540},
+			560, 120,
 			{0, 255, 0},
 			5,
 			"Salir"
@@ -172,11 +175,15 @@ void Controlador_Juego::dibujar_Estado()
 	{
 	case Estados_Juego::PANTALLA_TITULO:
 	{
+		dibujar_Fondo(Fondo_Pantalla_Titulo);
 
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_MENU:
 	{
+		dibujar_Fondo(Fondo_Pantalla_Menu);
+
 		Boton_Jugar.dibujar_Boton();
 		Boton_Ajustes.dibujar_Boton();
 		Boton_Salir.dibujar_Boton();
@@ -184,46 +191,55 @@ void Controlador_Juego::dibujar_Estado()
 		Boton_Anterior.dibujar_Boton();
 		Boton_Pausa.dibujar_Boton();
 		Boton_Siguiente.dibujar_Boton();
+
+		break;
+
 	}
 
 	case Estados_Juego::PANTALLA_TABLERO:
 	{
-
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_BATALLA:
 	{
-
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_PAUSA:
 	{
-
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_WIN:
 	{
-
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_GAME_OVER:
 	{
-
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_AJUSTES:
 	{
+		dibujar_Fondo(Fondo_Pantalla_Menu);
 
+		Boton_Menu_Principal.dibujar_Boton();
+		Boton_Creditos.dibujar_Boton();
+		Boton_Salir.dibujar_Boton();
+
+		break;
 	}
 
 	case Estados_Juego::PANTALLA_CREDITOS:
 	{
-
+		break;
 	}
 
 	default:
 	{
-
+		break;
 	}
 	}
 }
@@ -233,6 +249,22 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 	if (Estado_Actual == Estados_Juego::PANTALLA_TITULO)
 	{
 		cambiar_Estado(Estados_Juego::PANTALLA_MENU);
+	}
+
+	if (Estado_Actual == Estados_Juego::PANTALLA_MENU)
+	{
+		if (key == 27) // Escape
+		{
+			cambiar_Estado(Estados_Juego::PANTALLA_AJUSTES);
+		}
+	}
+
+	if (Estado_Actual == Estados_Juego::PANTALLA_AJUSTES)
+	{
+		if (key == 27) // Escape
+		{
+			cambiar_Estado(Estados_Juego::PANTALLA_MENU);
+		}
 	}
 }
 

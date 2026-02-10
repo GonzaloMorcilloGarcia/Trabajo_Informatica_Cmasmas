@@ -47,5 +47,8 @@
     <ClCompile Include="src\Ficheros_Codigo\Rectangulo.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ficheros_Codigo\funciones_globales.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

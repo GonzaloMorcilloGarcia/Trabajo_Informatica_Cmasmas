@@ -10,6 +10,7 @@
 #include <algorithm> // Para std::min y std::max //
 #include <cmath> // Para std::lround //      
 #include <iostream> // Para std::cout y std::endl //
+#include "ETSIDI.h"
 
 // Ficheros de Encabezado //
 
@@ -66,5 +67,10 @@ private:
 	Boton Boton_Jugar{}, Boton_Ajustes{}, Boton_Salir{}, Boton_Musica{}, Boton_Anterior{}, Boton_Pausa{}, Boton_Siguiente{};
 
 	Boton Boton_Menu_Principal{}, Boton_Creditos{};
+
+	GLuint Fondo_Pantalla_Titulo = 0;
+	GLuint Fondo_Pantalla_Menu = 0;
+
+
 };
 
