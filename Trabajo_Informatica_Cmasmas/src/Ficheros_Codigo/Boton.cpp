@@ -21,7 +21,7 @@ Boton::Boton(Vector_2D centro, float ancho, float alto, Color color_predetermina
 
 	borde_boton.ancho_rectangulo = ancho + 2 * borde; // El ancho del borde es el ancho del interior más el doble del ancho del borde //
 	borde_boton.alto_rectangulo = alto + 2 * borde; // El alto del borde es el alto del interior más el doble del ancho del borde //
-	borde_boton.color_rectangulo = {0,0,0}; // Asignamos el color del borde del botón a partir del valor proporcionado //
+	borde_boton.color_rectangulo = { 60, 30, 15 }; // Asignamos el color del borde del botón a partir del valor proporcionado //
 
 	texto_boton = texto; // Asignamos el texto del botón a partir del valor proporcionado //
 
@@ -30,25 +30,32 @@ Boton::Boton(Vector_2D centro, float ancho, float alto, Color color_predetermina
 
 void Boton::dibujar_Boton()
 {
-	borde_boton.dibujar_Rectangulo(); // Dibujamos el borde del botón //
+    borde_boton.dibujar_Rectangulo();
+    interior_boton.dibujar_Rectangulo();
 
-	interior_boton.dibujar_Rectangulo(); // Dibujamos el interior del botón //
+    void* fuente = GLUT_BITMAP_TIMES_ROMAN_24;
 
-    // Fuente
-    void* fuente = GLUT_BITMAP_HELVETICA_18;
+    glColor3ub(245, 235, 210);
 
-    // Color del texto (negro)
-    glColor3ub(0, 0, 0);
+    // Ancho del texto en PIXELES
+    const int wTextoPx = calcular_Ancho_Texto(texto_boton, fuente);
 
-    // Ancho del texto para centrar
-    const int wTexto = calcular_Ancho_Texto(texto_boton, fuente);
+    // Viewport actual (en píxeles)
+    int vp[4];
+    glGetIntegerv(GL_VIEWPORT, vp);
+    const float vpW = (float)vp[2];
 
-    // Coordenadas centradas (x: centrado real; y: ajuste visual)
-    const float xTexto = interior_boton.centro_rectangulo.x - wTexto * 0.5f;
-    const float yTexto = interior_boton.centro_rectangulo.y - 9.0f; // ajuste típico para Helvetica 18
+    // Conversión: píxeles -> unidades virtuales
+    const float pxPorUnidad = vpW / (float)VIRTUAL_W;
+    const float wTextoVirtual = wTextoPx / pxPorUnidad;
+
+    // Centrado real en X en unidades virtuales
+    const float xTexto = interior_boton.centro_rectangulo.x - wTextoVirtual * 0.5f;
+
+    // Y: baseline (esto es independiente del corrimiento a la derecha)
+    const float yTexto = interior_boton.centro_rectangulo.y - 8.0f;
 
     escribe_BitmapText(texto_boton, xTexto, yTexto, fuente);
-
 }
 
 void Boton::actualizar_Hover (Vector_2D mouse)
@@ -58,7 +65,7 @@ void Boton::actualizar_Hover (Vector_2D mouse)
     if (resaltado_boton)
     {
         // Color hover
-        interior_boton.color_rectangulo = Color(255, 255, 0);
+        interior_boton.color_rectangulo = Color(230, 150, 60);
 
         // Escala suave (10%)
         interior_boton.ancho_rectangulo = (int)(ancho_boton * 1.1f);
@@ -91,16 +98,4 @@ bool Boton::Contiene_Coordenadas( Vector_2D coordenada)
     const int y_min = static_cast<int>(interior_boton.centro_rectangulo.y - interior_boton.alto_rectangulo * 0.5f);
 
     return Contiene(coordenada,x_min,y_min, static_cast<int>(interior_boton.ancho_rectangulo), static_cast<int>(interior_boton.alto_rectangulo));
-}
-
-void Boton::Resaltar_Boton(Vector_2D coordenada)
-{
-	if (Contiene_Coordenadas(coordenada))
-	{
-		interior_boton.color_rectangulo = Color(255, 255, 0); // Cambia el color del interior del botón a amarillo para resaltar //
-	}
-	else
-	{
-		interior_boton.color_rectangulo = color_predeterminado_boton; // Si el mouse no está sobre el botón, vuelve al color original (rojo) //
-	}
 }

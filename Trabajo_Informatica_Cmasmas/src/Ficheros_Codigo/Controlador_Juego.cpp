@@ -7,6 +7,9 @@ void Controlador_Juego::iniciar_Controlador()
 
 	 Fondo_Pantalla_Titulo = ETSIDI::getTexture("imagenes/Pantalla_Titulo.png").id;
 	 Fondo_Pantalla_Menu = ETSIDI::getTexture("imagenes/Pantalla_Menu.png").id;
+	 Fondo_Pantalla_Tablero = ETSIDI::getTexture("imagenes/Pantalla_Fondo.png").id;
+	 Fondo_Pantalla_Batalla = ETSIDI::getTexture("imagenes/Pantalla_Batalla.png").id;
+
 
 	iniciar_Estado();
 }
@@ -36,36 +39,36 @@ void Controlador_Juego::iniciar_Estado()
 		{
 			{350, 870},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			10,
-			"Jugar"
+			"JUGAR"
 		};
 
 		Boton_Ajustes =
 		{
 			{350, 705},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			10,
-			"Ajustes"
+			"AJUSTES"
 		};
 
 		Boton_Salir =
 		{
 			{350, 540},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			10,
-			"Salir"
+			"SALIR"
 		};
 
 		Boton_Musica =
 		{
 			{350, 375},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			10,
-			"Musica"
+			"MUSICA"
 		};
 
 		// Controles abajo izquierda (fila)
@@ -74,7 +77,7 @@ void Controlador_Juego::iniciar_Estado()
 		{
 			{155, 210},
 			170, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			8,
 			"<-"
 		};
@@ -83,7 +86,7 @@ void Controlador_Juego::iniciar_Estado()
 		{
 			{350, 210},
 			170, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			8,
 			"||"
 		};
@@ -92,7 +95,7 @@ void Controlador_Juego::iniciar_Estado()
 		{
 			{545, 210},
 			170, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			8,
 			"->"
 		};
@@ -131,26 +134,26 @@ void Controlador_Juego::iniciar_Estado()
 		{
 			{350, 870},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			5,
-			"Menu Principal"
+			"MENU PRINCIPAL"
 		};
 
 		Boton_Creditos =
 		{
 			{350, 705},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			5,
-			"Creditos"
+			"CREDITOS"
 		};
 			Boton_Salir =
 		{
 			{350, 540},
 			560, 120,
-			{0, 255, 0},
+			{165, 92, 40},
 			5,
-			"Salir"
+			"SALIR"
 		};
 
 			break;
@@ -198,11 +201,15 @@ void Controlador_Juego::dibujar_Estado()
 
 	case Estados_Juego::PANTALLA_TABLERO:
 	{
+		dibujar_Fondo(Fondo_Pantalla_Tablero);
+
 		break;
 	}
 
 	case Estados_Juego::PANTALLA_BATALLA:
 	{
+		dibujar_Fondo(Fondo_Pantalla_Batalla);
+
 		break;
 	}
 
@@ -233,7 +240,63 @@ void Controlador_Juego::dibujar_Estado()
 	}
 
 	case Estados_Juego::PANTALLA_CREDITOS:
-	{
+	{		
+			dibujar_Fondo(Fondo_Pantalla_Menu);
+
+			void* fuenteTitulo = GLUT_BITMAP_TIMES_ROMAN_24;
+			void* fuenteTexto = GLUT_BITMAP_HELVETICA_18;
+
+			glColor3ub(245, 235, 210);
+
+			// Margen izquierdo más pegado
+			float x = 80.0f;
+
+			// Altura inicial más arriba
+			float y = VIRTUAL_H - 120.0f;
+
+			const float saltoGrande = 100.0f;   // separación entre bloques
+			const float saltoNormal = 60.0f;   // separación entre líneas normales
+
+			// ----- TÍTULO -----
+			escribe_BitmapText("CABALLOS VS CABALLAS", x, y, fuenteTitulo);
+			y -= saltoGrande;
+
+			escribe_BitmapText("CREDITOS", x, y, fuenteTexto);
+			y -= saltoGrande;
+
+			// ----- BLOQUE 1 -----
+			escribe_BitmapText("Arquitectos del Caos Equino y Marino", x, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("Felipe Arrierro Serrano", x + 30, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("Gonzalo Morcillo Garcia", x + 30, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("Jiahao Li Huang", x + 30, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("[Nombre 4]", x + 30, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("[Nombre 5]", x + 30, y, fuenteTexto);
+			y -= saltoGrande;
+
+			// ----- BLOQUE 2 -----
+			escribe_BitmapText("Imagenes y Recursos Visuales", x, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("Generados con IA (ChatGPT)", x + 30, y, fuenteTexto);
+			y -= saltoGrande;
+
+			// ----- BLOQUE 3 -----
+			escribe_BitmapText("Banda Sonora Original", x, y, fuenteTexto);
+			y -= saltoNormal;
+
+			escribe_BitmapText("Generada con IA (Suno)", x + 30, y, fuenteTexto);
+			y -= saltoGrande;
+
 		break;
 	}
 
@@ -251,7 +314,7 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 		cambiar_Estado(Estados_Juego::PANTALLA_MENU);
 	}
 
-	if (Estado_Actual == Estados_Juego::PANTALLA_MENU)
+	else if (Estado_Actual == Estados_Juego::PANTALLA_MENU)
 	{
 		if (key == 27) // Escape
 		{
@@ -259,11 +322,27 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 		}
 	}
 
-	if (Estado_Actual == Estados_Juego::PANTALLA_AJUSTES)
+	else if (Estado_Actual == Estados_Juego::PANTALLA_AJUSTES)
 	{
 		if (key == 27) // Escape
 		{
 			cambiar_Estado(Estados_Juego::PANTALLA_MENU);
+		}
+	}
+
+	else if (Estado_Actual == Estados_Juego::PANTALLA_CREDITOS)
+	{
+		if (key == 27) // Escape
+		{
+			cambiar_Estado(Estados_Juego::PANTALLA_AJUSTES);
+		}
+	}
+
+	else if (Estado_Actual == (Estados_Juego::PANTALLA_TABLERO)|| Estado_Actual == (Estados_Juego::PANTALLA_BATALLA) )
+	{
+		if (key == 27) // Escape
+		{
+			cambiar_Estado(Estados_Juego::PANTALLA_PAUSA);
 		}
 	}
 }

@@ -70,6 +70,8 @@ private:
 
 	GLuint Fondo_Pantalla_Titulo = 0;
 	GLuint Fondo_Pantalla_Menu = 0;
+	GLuint Fondo_Pantalla_Tablero = 0;
+	GLuint Fondo_Pantalla_Batalla = 0;
 
 
 };

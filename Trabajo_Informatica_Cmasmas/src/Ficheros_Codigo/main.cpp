@@ -103,7 +103,7 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
     glutInitWindowSize(VIRTUAL_W / 2, VIRTUAL_H / 2);
-    glutCreateWindow("Trabajo de Informatica Cmasmas: NOMBRE POR DEFINIR");
+    glutCreateWindow("Trabajo de Informatica Cmasmas: CABALLOS vs CABALLAS");
 
     // Callbacks
 

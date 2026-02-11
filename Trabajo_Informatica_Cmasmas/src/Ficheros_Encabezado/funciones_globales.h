@@ -38,7 +38,7 @@ inline void escribe_BitmapText(const std::string& text, float x, float y, void* 
 {
     glRasterPos2f(x, y);
 
-    for (char c : text)
+    for (unsigned char c : text)
     {
         glutBitmapCharacter(fuente, c);
     }
@@ -49,7 +49,7 @@ inline void escribe_BitmapText(const std::string& text, float x, float y, void* 
 inline int calcular_Ancho_Texto(const std::string& texto, void* fuente)
 {
     int ancho_Total = 0;
-    for (char c : texto)
+    for (unsigned char c : texto)
     {
         ancho_Total += glutBitmapWidth(fuente, c);
     }
