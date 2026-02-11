@@ -46,7 +46,10 @@ public:
 
 	bool Contiene_Coordenadas(Vector_2D coordenada);
 
-	void Resaltar_Boton(Vector_2D coordenada);
+	inline void set_Texto(const std::string& nuevo_texto)
+	{
+		texto_boton = nuevo_texto;
+	}
 
 };
 

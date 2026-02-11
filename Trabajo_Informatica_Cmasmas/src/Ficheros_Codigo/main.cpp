@@ -248,6 +248,8 @@ void OnTimer(int value)
 {
 	// Aquí se pueden actualizar las animaciones, el estado del juego, etc. que necesiten ser actualizados periódicamente //
 
+	controlador_juego.loop_Juego(value); 
+
 	glutPostRedisplay(); // Solicita a GLUT que vuelva a dibujar la pantalla después de actualizar el estado del juego //
 
 	glutTimerFunc(FRAME_MS, OnTimer, 0); // Vuelve a configurar el temporizador para que se llame a esta función nuevamente después de FRAME_MS milisegundos, creando un bucle de actualización constante //

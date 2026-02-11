@@ -59,6 +59,8 @@ public:
 
 	void actualizar_Hover(Vector_2D coordenadas_mouse);
 
+	void loop_Juego(int value);
+
 	Estados_Juego get_Estado_Actual() const { return Estado_Actual; }
 
 private:

@@ -31,6 +31,7 @@ Boton::Boton(Vector_2D centro, float ancho, float alto, Color color_predetermina
 void Boton::dibujar_Boton()
 {
     borde_boton.dibujar_Rectangulo();
+
     interior_boton.dibujar_Rectangulo();
 
     void* fuente = GLUT_BITMAP_TIMES_ROMAN_24;

@@ -46,6 +46,8 @@ public:
 
     void pausar_Cancion();
     void reanudar_Cancion();
+	void toggle_Cancion();
+
     void detener_Cancion();     
     void reiniciar_Cancion();
 
@@ -60,6 +62,9 @@ public:
 
     inline int get_Id_Actual() const { return id_actual; };
 
+    std::string get_Nombre_Cancion_Actual() const;
+
+
 private:
 
     std::vector<Cancion> lista_canciones;
@@ -73,6 +78,8 @@ private:
 	bool musica_pausada = false;
 
     float volumen_musica = 60.f;
+
+    sf::SoundSource::Status estado_anterior = sf::SoundSource::Status::Stopped;
 
 private:
 

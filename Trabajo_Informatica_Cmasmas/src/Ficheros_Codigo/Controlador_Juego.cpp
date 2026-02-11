@@ -30,7 +30,7 @@ void Controlador_Juego::iniciar_Estado()
 	{
 	case Estados_Juego::PANTALLA_TITULO:
 	{
-		controlador_audio.reproducir_Cancion(0, true);
+		controlador_audio.reproducir_Cancion(0, false);
 
 		break;
 
@@ -193,6 +193,8 @@ void Controlador_Juego::dibujar_Estado()
 		Boton_Jugar.dibujar_Boton();
 		Boton_Ajustes.dibujar_Boton();
 		Boton_Salir.dibujar_Boton();
+
+		Boton_Musica.set_Texto(controlador_audio.get_Nombre_Cancion_Actual());
 		Boton_Musica.dibujar_Boton();
 		Boton_Anterior.dibujar_Boton();
 		Boton_Pausa.dibujar_Boton();
@@ -381,6 +383,34 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 		{
 			std::exit(0);
 		}
+
+		if (Boton_Musica.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.reiniciar_Cancion();
+
+			return;
+		}
+
+		if (Boton_Anterior.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.anterior_Cancion();
+
+			return;
+		}
+
+		if (Boton_Pausa.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.toggle_Cancion();
+
+			return;
+		}
+
+		if (Boton_Siguiente.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.siguiente_Cancion();
+			return;
+		}
+
 		return;
 	}
 
@@ -424,4 +454,9 @@ void Controlador_Juego::actualizar_Hover(Vector_2D coordenadas_mouse)
 		Boton_Creditos.actualizar_Hover(coordenadas_mouse);
 		Boton_Salir.actualizar_Hover(coordenadas_mouse);
 	}
+}
+
+void Controlador_Juego::loop_Juego(int value)
+{
+	controlador_audio.actualizar_Cancion();
 }

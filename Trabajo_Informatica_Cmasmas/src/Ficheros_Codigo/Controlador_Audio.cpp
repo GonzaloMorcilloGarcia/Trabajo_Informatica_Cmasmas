@@ -19,6 +19,12 @@ void Controlador_Audio::iniciar_Controlador_Audio()
     anadir_Cancion(Relleno_2);
     anadir_Cancion(Batalla_1);
 	anadir_Cancion(Batalla_2);
+
+    reproduciendo_musica = false;
+
+    id_actual = 0;
+
+    estado_anterior = sf::SoundSource::Status::Stopped;
 }
 
 bool Controlador_Audio::reproducir_Cancion (int id, bool loop)
@@ -42,16 +48,20 @@ bool Controlador_Audio::reproducir_Cancion (int id, bool loop)
 
     if (!musica.openFromFile(ruta))
     {
-        std::cout << "PROBLEMA" << std::endl; return false;
+        std::cout << "Error abriendo: " << ruta << std::endl;
+
+        return false;
     }
 
     id_actual = id;
 
-    reproduciendo_musica = true;
-
     musica.setLooping(loop);
     musica.setVolume(volumen_musica);
     musica.play();
+
+    reproduciendo_musica = true;
+
+    estado_anterior = sf::SoundSource::Status::Playing;
 
     return true;
 }
@@ -77,43 +87,78 @@ void Controlador_Audio::reanudar_Cancion()
         musica.play();
 }
 
+void Controlador_Audio::toggle_Cancion()
+{
+    auto estado = musica.getStatus();
+
+    if (estado == sf::SoundSource::Status::Playing)
+    {
+        pausar_Cancion();
+    }
+    else if (estado == sf::SoundSource::Status::Paused)
+    {
+        reanudar_Cancion();
+    }
+        
+}
+
 void Controlador_Audio::detener_Cancion()
 {
-    if (reproduciendo_musica)
-        musica.stop();
+    if (!reproduciendo_musica) return;
+
+    musica.stop();
+
+    reproduciendo_musica = false;
+
+    estado_anterior = sf::SoundSource::Status::Stopped;
 }
 
 void Controlador_Audio::reiniciar_Cancion()
 {
-    if (reproduciendo_musica) return;
-    musica.stop(); // stop vuelve al inicio
+    if (!reproduciendo_musica) return;
+
+    musica.stop();
+
     musica.play();
 }
 
 bool Controlador_Audio::anterior_Cancion()
 {
-    id_actual = id_actual - 1;
+    if (lista_canciones.empty()) return false;
 
-    if (id_actual < 0) id_actual = (int)lista_canciones.size() - 1;
+    int anterior = id_actual - 1;
 
-    return reproducir_Cancion(id_actual, false);
+    if (anterior < 0) anterior = (int)lista_canciones.size() - 1;
+
+    return reproducir_Cancion(anterior, false);
 }
 
 bool Controlador_Audio::siguiente_Cancion()
 {
-    id_actual = id_actual + 1;
+    int siguiente = id_actual + 1;
 
-    if (id_actual >= (int)lista_canciones.size()) id_actual = 0;
+    if (siguiente >= (int)lista_canciones.size()) siguiente = 0;
 
-    return reproducir_Cancion(id_actual, false);
+    if (reproducir_Cancion(siguiente, false))
+    {
+        id_actual = siguiente;
+        return true;
+    }
+    return false;
 }
 
 void Controlador_Audio::actualizar_Cancion()
 {
-    if (reproduciendo_musica && musica.getStatus() == sf::SoundSource::Status::Stopped && !musica.isLooping())
+    if (lista_canciones.empty()) return;
+
+    auto estado = musica.getStatus();
+
+    if (estado_anterior == sf::SoundSource::Status::Playing && estado == sf::SoundSource::Status::Stopped && !musica.isLooping())
     {
         siguiente_Cancion();
     }
+
+    estado_anterior = estado;
 }
 
 void Controlador_Audio::set_Volumen_Musica(float volumen)
@@ -141,3 +186,14 @@ float Controlador_Audio::limitador_Volumen (float volumen)
     
     return volumen;
 }
+
+std::string Controlador_Audio::get_Nombre_Cancion_Actual() const
+{
+    if (lista_canciones.empty()) return "";
+
+    if (id_actual < 0 || id_actual >= (int)lista_canciones.size())
+        return "";
+
+    return lista_canciones[id_actual].nombre_cancion;
+}
+
