@@ -5,10 +5,10 @@ void Controlador_Juego::iniciar_Controlador()
 {
 	Estado_Actual = Estados_Juego::PANTALLA_TITULO;
 
-	 Fondo_Pantalla_Titulo = ETSIDI::getTexture("imagenes/Pantalla_Titulo.png").id;
-	 Fondo_Pantalla_Menu = ETSIDI::getTexture("imagenes/Pantalla_Menu.png").id;
-	 Fondo_Pantalla_Tablero = ETSIDI::getTexture("imagenes/Pantalla_Fondo.png").id;
-	 Fondo_Pantalla_Batalla = ETSIDI::getTexture("imagenes/Pantalla_Batalla.png").id;
+	 Fondo_Pantalla_Titulo = ETSIDI::getTexture("assets/imagenes/Pantalla_Titulo.png").id;
+	 Fondo_Pantalla_Menu = ETSIDI::getTexture("assets/imagenes/Pantalla_Menu.png").id;
+	 Fondo_Pantalla_Tablero = ETSIDI::getTexture("assets/imagenes/Pantalla_Fondo.png").id;
+	 Fondo_Pantalla_Batalla = ETSIDI::getTexture("assets/imagenes/Pantalla_Batalla.png").id;
 
 
 	iniciar_Estado();

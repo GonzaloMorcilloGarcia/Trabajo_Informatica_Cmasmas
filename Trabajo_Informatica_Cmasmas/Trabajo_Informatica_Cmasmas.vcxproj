@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\Ficheros_Encabezado\Boton.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Color.h" />
+    <ClInclude Include="src\Ficheros_Encabezado\Controlador_Audio.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Controlador_Juego.h" />
     <ClInclude Include="src\Ficheros_Encabezado\funciones_globales.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Rectangulo.h" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ficheros_Codigo\Boton.cpp" />
+    <ClCompile Include="src\Ficheros_Codigo\Controlador_Audio.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Controlador_Juego.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\funciones_globales.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\main.cpp" />
@@ -100,12 +102,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>lib; $(ProjectDir)\src\Ficheros_Encabezado;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib; $(ProjectDir)\src\Ficheros_Encabezado; $(ProjectDir)external\SFML-3.0.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib; $(ProjectDir)external\SFML-3.0.2\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,12 +131,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>lib; $(ProjectDir)\src\Ficheros_Encabezado;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>lib; $(ProjectDir)\src\Ficheros_Encabezado; $(ProjectDir)external\SFML-3.0.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib; $(ProjectDir)external\SFML-3.0.2\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
