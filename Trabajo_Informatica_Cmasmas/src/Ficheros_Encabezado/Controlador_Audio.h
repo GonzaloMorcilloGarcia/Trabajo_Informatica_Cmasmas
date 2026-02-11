@@ -30,18 +30,58 @@ struct Cancion
 
 };
 
+// DECLARACION DE CANCIONES //
+
+
+
 class Controlador_Audio
 {
-	std::vector <Cancion> lista_canciones;
 
-	public:
+public:
 
-	void iniciar_Controlador_Audio();
+    void iniciar_Controlador_Audio();
 
-	void reproducir_Cancion(const std::string& ruta_cancion);
+    inline void anadir_Cancion(const Cancion& c)
+    {
+        lista_canciones.push_back(c);
+    }
 
-	void detener_Cancion();
+    bool reproducir_Cancion (int id, bool loop = true);
+    bool reproducir_Cancion (const std::string& nombre, bool loop = true);
 
-	void reiniciar_Cancion();
+    void pausar_Cancion();
+    void reanudar_Cancion();
+    void detener_Cancion();     
+    void reiniciar_Cancion();
+
+	bool anterior_Cancion();
+	bool siguiente_Cancion();
+	
+    void actualizar_Cancion();
+
+    void set_Volumen_Musica(float volumen);
+    
+    inline float get_Volumen_Musica() const { return volumen_musica; };
+
+    inline int get_Id_Actual() const { return id_actual; };
+
+private:
+
+    std::vector<Cancion> lista_canciones;
+
+    sf::Music musica;       // 1 música activa
+
+    int id_actual = 0;
+
+    bool reproduciendo_musica = false;
+
+	bool musica_pausada = false;
+
+    float volumen_musica = 60.f;
+
+private:
+
+    int buscar_Id (const std::string& nombre) const;
+
+    static float limitador_Volumen (float volumen);
 };
-
