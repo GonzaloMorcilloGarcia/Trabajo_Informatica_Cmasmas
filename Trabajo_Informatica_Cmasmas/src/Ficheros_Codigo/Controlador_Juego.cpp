@@ -10,6 +10,7 @@ void Controlador_Juego::iniciar_Controlador()
 	 Fondo_Pantalla_Tablero = ETSIDI::getTexture("assets/imagenes/Pantalla_Fondo.png").id;
 	 Fondo_Pantalla_Batalla = ETSIDI::getTexture("assets/imagenes/Pantalla_Batalla.png").id;
 
+	controlador_audio.iniciar_Controlador_Audio();
 
 	iniciar_Estado();
 }
@@ -29,6 +30,8 @@ void Controlador_Juego::iniciar_Estado()
 	{
 	case Estados_Juego::PANTALLA_TITULO:
 	{
+		controlador_audio.reproducir_Cancion(0, true);
+
 		break;
 
 	}

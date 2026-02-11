@@ -15,6 +15,7 @@
 // Ficheros de Encabezado //
 
 #include "funciones_globales.h"
+#include "Controlador_Audio.h"
 #include "Vector_2D.h"
 
 #include "Boton.h"
@@ -72,6 +73,8 @@ private:
 	GLuint Fondo_Pantalla_Menu = 0;
 	GLuint Fondo_Pantalla_Tablero = 0;
 	GLuint Fondo_Pantalla_Batalla = 0;
+
+	Controlador_Audio controlador_audio;
 
 
 };

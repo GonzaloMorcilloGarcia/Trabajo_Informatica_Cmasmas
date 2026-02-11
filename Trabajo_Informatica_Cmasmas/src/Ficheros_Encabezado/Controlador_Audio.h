@@ -18,7 +18,6 @@
 
 #include "funciones_globales.h"
 #include "Boton.h"
-#include "Controlador_Juego.h"
 
 struct Cancion 
 {
@@ -29,10 +28,6 @@ struct Cancion
 	int id_cancion; // Identificador unico para cada cancion
 
 };
-
-// DECLARACION DE CANCIONES //
-
-
 
 class Controlador_Audio
 {

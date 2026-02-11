@@ -4,10 +4,27 @@ void Controlador_Audio::iniciar_Controlador_Audio()
 {
     set_Volumen_Musica(volumen_musica);
 
+    Cancion Titulo{ "Caballos vs Caballas", "assets/sonidos/Banda_Sonora/Caballos_vs_Caballas.ogg", 2 * 60 + 52, 0 };
+    Cancion Menu{ "Menu", "assets/sonidos/Banda_Sonora/Menu_Track.ogg", 5 * 60 + 44, 1 };
+    Cancion Tablero{ "El Ataque de las Coces", "assets/sonidos/Banda_Sonora/El_Ataque_de_las_Coces.ogg", 4 * 60 + 4, 2 };
+    Cancion Relleno_1{ "La Venganza de los Fish", "assets/sonidos/Banda_Sonora/La_Venganza_de_los_Fish.ogg", 4 * 60 + 22, 3 };
+    Cancion Relleno_2{ "Caballas y Furiosas", "assets/sonidos/Banda_Sonora/Caballas_y_Furiosas.ogg", 2 * 60 + 39, 4 };
+    Cancion Batalla_1{ "Retro-Herradura", "assets/sonidos/Banda_Sonora/Retro-Herradura.ogg", 6 * 60 + 41, 5 };
+    Cancion Batalla_2{ "Furia Equina", "assets/sonidos/Banda_Sonora/Furia_Equina.ogg", 6 * 60 + 47, 6 };
+
+    anadir_Cancion(Titulo);
+    anadir_Cancion(Menu);
+    anadir_Cancion(Tablero);
+    anadir_Cancion(Relleno_1);
+    anadir_Cancion(Relleno_2);
+    anadir_Cancion(Batalla_1);
+	anadir_Cancion(Batalla_2);
 }
 
 bool Controlador_Audio::reproducir_Cancion (int id, bool loop)
 {
+    if (id < 0 || id >= (int)lista_canciones.size())
+        return false;
  
     if (reproduciendo_musica && id_actual == id)
     {
@@ -23,7 +40,10 @@ bool Controlador_Audio::reproducir_Cancion (int id, bool loop)
 
     const std::string& ruta = lista_canciones[id].ruta_cancion;
 
-    if (!musica.openFromFile(ruta)) return false;
+    if (!musica.openFromFile(ruta))
+    {
+        std::cout << "PROBLEMA" << std::endl; return false;
+    }
 
     id_actual = id;
 
@@ -39,6 +59,8 @@ bool Controlador_Audio::reproducir_Cancion (int id, bool loop)
 bool Controlador_Audio::reproducir_Cancion (const std::string& nombre, bool loop )
 {
 	int id = buscar_Id(nombre);
+
+    if (id < 0) return false;
 
     return reproducir_Cancion(id, loop);
 }
@@ -104,7 +126,7 @@ void Controlador_Audio::set_Volumen_Musica(float volumen)
 
 int Controlador_Audio::buscar_Id(const std::string& nombre) const
 {
-    for ( auto i : lista_canciones )
+    for ( const auto& i : lista_canciones )
     {
         if (i.nombre_cancion == nombre) return i.id_cancion;
     }
