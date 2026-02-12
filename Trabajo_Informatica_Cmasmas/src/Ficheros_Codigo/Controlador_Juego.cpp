@@ -56,29 +56,20 @@ void Controlador_Juego::iniciar_Estado()
 			"AJUSTES"
 		};
 
-		Boton_Salir =
-		{
-			{350, 540},
-			560, 120,
-			{165, 92, 40},
-			10,
-			"SALIR"
-		};
-
 		Boton_Musica =
 		{
-			{350, 375},
+			{350, 540},
 			560, 120,
 			{165, 92, 40},
 			10,
 			"MUSICA"
 		};
 
-		// Controles abajo izquierda (fila)
+		// Fila de controles (igual que antes)
 
 		Boton_Anterior =
 		{
-			{155, 210},
+			{155, 375},
 			170, 120,
 			{165, 92, 40},
 			8,
@@ -87,7 +78,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Pausa =
 		{
-			{350, 210},
+			{350, 375},
 			170, 120,
 			{165, 92, 40},
 			8,
@@ -96,11 +87,22 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Siguiente =
 		{
-			{545, 210},
+			{545, 375},
 			170, 120,
 			{165, 92, 40},
 			8,
 			"->"
+		};
+
+		// SALIR ahora ocupa la posición que antes era MUSICA (debajo de la fila)
+
+		Boton_Salir =
+		{
+			{350, 210},
+			560, 120,
+			{165, 92, 40},
+			10,
+			"SALIR"
 		};
 
 		break;
@@ -108,6 +110,42 @@ void Controlador_Juego::iniciar_Estado()
 
 	case Estados_Juego::PANTALLA_TABLERO:
 	{
+		Boton_Musica =
+		{
+			{960, 120},
+			560, 60,
+			{165, 92, 40},
+			10,
+			"MUSICA"
+		};
+
+		Boton_Anterior =
+		{
+			{773, 50},      // 680 + 93
+			186, 60,
+			{165, 92, 40},
+			8,
+			"<-"
+		};
+
+		Boton_Pausa =
+		{
+			{960, 50},      // centro exacto
+			188, 60,
+			{165, 92, 40},
+			8,
+			"||"
+		};
+
+		Boton_Siguiente =
+		{
+			{1147, 50},     // 1240 - 93
+			186, 60,
+			{165, 92, 40},
+			8,
+			"->"
+		};
+
 		break;
 	}
 
@@ -144,7 +182,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Creditos =
 		{
-			{350, 705},
+			{350, 375},
 			560, 120,
 			{165, 92, 40},
 			5,
@@ -152,12 +190,41 @@ void Controlador_Juego::iniciar_Estado()
 		};
 			Boton_Salir =
 		{
-			{350, 540},
+			{350, 210},
 			560, 120,
 			{165, 92, 40},
 			5,
 			"SALIR"
 		};
+
+			Boton_Volumen =
+			{
+				{350, 705},
+				560, 120,
+				{165, 92, 40},
+				10,
+				"VOLUMEN"
+			};
+
+			// Controles abajo izquierda (fila)
+
+			Boton_Bajar_Volumen =
+			{
+				{199, 540},
+				258, 120,
+				{165, 92, 40},
+				8,
+				"-"
+			};
+
+			Boton_Subir_Volumen =
+			{
+				{501, 540},
+				258, 120,
+				{165, 92, 40},
+				8,
+				"+"
+			};
 
 			break;
 	}
@@ -208,6 +275,12 @@ void Controlador_Juego::dibujar_Estado()
 	{
 		dibujar_Fondo(Fondo_Pantalla_Tablero);
 
+		Boton_Musica.set_Texto(controlador_audio.get_Nombre_Cancion_Actual());
+		Boton_Musica.dibujar_Boton();
+		Boton_Anterior.dibujar_Boton();
+		Boton_Pausa.dibujar_Boton();
+		Boton_Siguiente.dibujar_Boton();
+
 		break;
 	}
 
@@ -240,6 +313,13 @@ void Controlador_Juego::dibujar_Estado()
 		Boton_Menu_Principal.dibujar_Boton();
 		Boton_Creditos.dibujar_Boton();
 		Boton_Salir.dibujar_Boton();
+
+		int porcentaje = static_cast<int>(std::round(controlador_audio.get_Volumen_Musica()));
+
+		Boton_Volumen.set_Texto("VOLUMEN: " + std::to_string(porcentaje) + "%");
+		Boton_Volumen.dibujar_Boton();
+		Boton_Bajar_Volumen.dibujar_Boton();
+		Boton_Subir_Volumen.dibujar_Boton();
 
 		break;
 	}
@@ -427,10 +507,59 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 			cambiar_Estado(Estados_Juego::PANTALLA_CREDITOS);
 			return;
 		}
+		if (Boton_Volumen.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.set_Volumen_Musica(50);
+			return;
+		}
+		if (Boton_Bajar_Volumen.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.set_Volumen_Musica(controlador_audio.get_Volumen_Musica() - 10);
+			return;
+		}
+		if (Boton_Subir_Volumen.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.set_Volumen_Musica(controlador_audio.get_Volumen_Musica() + 10);
+			return;
+		}
 		if (Boton_Salir.Contiene_Coordenadas(coordenadas_mouse))
 		{
 			std::exit(0);
 		}
+		return;
+
+
+	}
+
+	if (Estado_Actual == Estados_Juego::PANTALLA_TABLERO)
+	{
+		if (Boton_Musica.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.reiniciar_Cancion();
+
+			return;
+		}
+
+		if (Boton_Anterior.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.anterior_Cancion();
+
+			return;
+		}
+
+		if (Boton_Pausa.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.toggle_Cancion();
+
+			return;
+		}
+
+		if (Boton_Siguiente.Contiene_Coordenadas(coordenadas_mouse))
+		{
+			controlador_audio.siguiente_Cancion();
+			return;
+		}
+
 		return;
 	}
 
@@ -453,6 +582,17 @@ void Controlador_Juego::actualizar_Hover(Vector_2D coordenadas_mouse)
 		Boton_Menu_Principal.actualizar_Hover(coordenadas_mouse);
 		Boton_Creditos.actualizar_Hover(coordenadas_mouse);
 		Boton_Salir.actualizar_Hover(coordenadas_mouse);
+		Boton_Volumen.actualizar_Hover(coordenadas_mouse);
+		Boton_Bajar_Volumen.actualizar_Hover(coordenadas_mouse);
+		Boton_Subir_Volumen.actualizar_Hover(coordenadas_mouse);
+	}
+
+	if (Estado_Actual == Estados_Juego::PANTALLA_TABLERO)
+	{
+		Boton_Musica.actualizar_Hover(coordenadas_mouse);
+		Boton_Anterior.actualizar_Hover(coordenadas_mouse);
+		Boton_Pausa.actualizar_Hover(coordenadas_mouse);
+		Boton_Siguiente.actualizar_Hover(coordenadas_mouse);
 	}
 }
 

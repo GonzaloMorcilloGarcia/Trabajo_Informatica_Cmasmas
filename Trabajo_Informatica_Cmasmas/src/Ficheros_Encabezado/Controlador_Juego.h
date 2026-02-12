@@ -69,7 +69,7 @@ private:
 
 	Boton Boton_Jugar{}, Boton_Ajustes{}, Boton_Salir{}, Boton_Musica{}, Boton_Anterior{}, Boton_Pausa{}, Boton_Siguiente{};
 
-	Boton Boton_Menu_Principal{}, Boton_Creditos{};
+	Boton Boton_Menu_Principal{}, Boton_Creditos{}, Boton_Volumen{}, Boton_Bajar_Volumen{}, Boton_Subir_Volumen{};
 
 	GLuint Fondo_Pantalla_Titulo = 0;
 	GLuint Fondo_Pantalla_Menu = 0;
