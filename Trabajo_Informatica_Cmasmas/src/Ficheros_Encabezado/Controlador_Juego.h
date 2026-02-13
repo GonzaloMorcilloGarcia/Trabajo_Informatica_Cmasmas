@@ -59,7 +59,7 @@ public:
 
 private:
 
-	Estados_Juego Estado_Actual, Estado_Siguiente;	
+	Estados_Juego Estado_Actual, Estado_Anterior;	
 
 	Boton Boton_Jugar{}, Boton_Ajustes{}, Boton_Salir{}, Boton_Musica{}, Boton_Anterior{}, Boton_Pausa{}, Boton_Siguiente{};
 
@@ -67,8 +67,7 @@ private:
 
 	GLuint Fondo_Pantalla_Titulo = 0;
 	GLuint Fondo_Pantalla_Menu = 0;
-	GLuint Fondo_Pantalla_Tablero = 0;
-	GLuint Fondo_Pantalla_Batalla = 0;
+	GLuint Fondo_Pantalla_Partida = 0;
 
 	Controlador_Audio controlador_audio;
 	Controlador_Partida controlador_partida;

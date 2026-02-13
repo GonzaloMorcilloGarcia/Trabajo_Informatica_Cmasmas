@@ -7,16 +7,17 @@ void Controlador_Juego::iniciar_Controlador()
 
 	 Fondo_Pantalla_Titulo = ETSIDI::getTexture("assets/imagenes/Pantalla_Titulo.png").id;
 	 Fondo_Pantalla_Menu = ETSIDI::getTexture("assets/imagenes/Pantalla_Menu.png").id;
-	 Fondo_Pantalla_Tablero = ETSIDI::getTexture("assets/imagenes/Pantalla_Fondo.png").id;
-	 Fondo_Pantalla_Batalla = ETSIDI::getTexture("assets/imagenes/Pantalla_Batalla.png").id;
+	 Fondo_Pantalla_Partida = ETSIDI::getTexture("assets/imagenes/Pantalla_Fondo.png").id;
 
 	controlador_audio.iniciar_Controlador_Audio();
+	controlador_partida.iniciar_Controlador();
 
 	iniciar_Estado();
 }
 
 void Controlador_Juego::cambiar_Estado(Estados_Juego estado_siguiente)
 {
+	Estado_Anterior = Estado_Actual;
 	Estado_Actual = estado_siguiente;
 	
 	iniciar_Estado();
@@ -110,11 +111,10 @@ void Controlador_Juego::iniciar_Estado()
 
 	case Estados_Juego::PANTALLA_PARTIDA:
 	{
-		controlador_partida.iniciar_Controlador();
 
 		Boton_Musica =
 		{
-			{960, 120},
+			{547, 50},
 			560, 60,
 			{165, 92, 40},
 			10,
@@ -123,7 +123,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Anterior =
 		{
-			{773, 50},      // 680 + 93
+			{1186, 50},
 			186, 60,
 			{165, 92, 40},
 			8,
@@ -132,7 +132,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Pausa =
 		{
-			{960, 50},      // centro exacto
+			{1373, 50},
 			188, 60,
 			{165, 92, 40},
 			8,
@@ -141,7 +141,7 @@ void Controlador_Juego::iniciar_Estado()
 
 		Boton_Siguiente =
 		{
-			{1147, 50},     // 1240 - 93
+			{1560, 50},
 			186, 60,
 			{165, 92, 40},
 			8,
@@ -259,7 +259,7 @@ void Controlador_Juego::dibujar_Estado()
 
 	case Estados_Juego::PANTALLA_PARTIDA:
 	{
-		dibujar_Fondo(Fondo_Pantalla_Tablero);
+		dibujar_Fondo(Fondo_Pantalla_Partida);
 
 		Boton_Musica.set_Texto(controlador_audio.get_Nombre_Cancion_Actual());
 		Boton_Musica.dibujar_Boton();
@@ -381,7 +381,7 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 	{
 		if (key == 27) // Escape
 		{
-			cambiar_Estado(Estados_Juego::PANTALLA_MENU);
+			cambiar_Estado(Estado_Anterior);
 		}
 	}
 
@@ -395,23 +395,25 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 
 	else if (Estado_Actual == Estados_Juego::PANTALLA_PARTIDA)
 	{
-		
+		if (key == 27) // Escape
+		{
+			cambiar_Estado(Estados_Juego::PANTALLA_AJUSTES);
+		}
+
+		controlador_partida.teclas_Partida(key);
 	}
 }
 
 void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool leftClick)
 {
-	// 1) En la pantalla de título: cualquier click (izq/der) vale para pasar al menú
 	if (Estado_Actual == Estados_Juego::PANTALLA_TITULO)
 	{
 		cambiar_Estado(Estados_Juego::PANTALLA_MENU);
 		return;
 	}
 
-	// 2) Para interactuar con botones, exigimos click izquierdo
 	if (!leftClick) return;
 
-	// 3) Menú principal
 	if (Estado_Actual == Estados_Juego::PANTALLA_MENU)
 	{
 		if (Boton_Jugar.Contiene_Coordenadas(coordenadas_mouse))
@@ -461,7 +463,6 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 		return;
 	}
 
-	// 4) Ajustes
 	if (Estado_Actual == Estados_Juego::PANTALLA_AJUSTES)
 	{
 		if (Boton_Menu_Principal.Contiene_Coordenadas(coordenadas_mouse))
@@ -500,6 +501,7 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 
 	if (Estado_Actual == Estados_Juego::PANTALLA_PARTIDA)
 	{
+		
 		if (Boton_Musica.Contiene_Coordenadas(coordenadas_mouse))
 		{
 			controlador_audio.reiniciar_Cancion();
@@ -526,6 +528,8 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 			controlador_audio.siguiente_Cancion();
 			return;
 		}
+
+		controlador_partida.mouse_Partida(coordenadas_mouse, leftClick);
 
 		return;
 	}

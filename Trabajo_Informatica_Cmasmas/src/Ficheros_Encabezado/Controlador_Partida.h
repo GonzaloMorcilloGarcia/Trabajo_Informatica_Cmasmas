@@ -27,7 +27,6 @@ class Controlador_Partida
 
 		PANTALLA_TABLERO,
 		PANTALLA_BATALLA,
-		PANTALLA_PAUSA,
 
 		// Estados de Victoria o Derrota //
 
@@ -65,7 +64,8 @@ private:
 
 	Boton Boton_Menu_Principal{}, Boton_Creditos{}, Boton_Volumen{}, Boton_Bajar_Volumen{}, Boton_Subir_Volumen{};
 
-	GLuint Fondo_Pantalla_Tablero = 0;
 	GLuint Fondo_Pantalla_Batalla = 0;
+	GLuint Fondo_Pantalla_Win = 0;
+	GLuint Fondo_Pantalla_Game_Over = 0;
 };
 

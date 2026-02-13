@@ -5,6 +5,10 @@ void Controlador_Partida::iniciar_Controlador()
 {
 	Estado_Actual = Estados_Partida::PANTALLA_TABLERO;
 
+	Fondo_Pantalla_Batalla = ETSIDI::getTexture("assets/imagenes/Pantalla_Batalla.png").id;
+	Fondo_Pantalla_Win = ETSIDI::getTexture("assets/imagenes/Pantalla_Win.png").id;
+	Fondo_Pantalla_Game_Over = ETSIDI::getTexture("assets/imagenes/Pantalla_Game_Over.png").id;
+
 	iniciar_Estado();
 }
 
@@ -30,12 +34,6 @@ void Controlador_Partida::iniciar_Estado()
 	case Estados_Partida::PANTALLA_BATALLA:
 	{
 		
-		break;
-	}
-
-	case Estados_Partida::PANTALLA_PAUSA:
-	{
-
 		break;
 	}
 
@@ -74,29 +72,22 @@ void Controlador_Partida::dibujar_Estado()
 
 	case Estados_Partida::PANTALLA_BATALLA:
 	{
-		//dibujar_Fondo();
+		dibujar_Fondo(Fondo_Pantalla_Batalla);
 
 		break;
 
-	}
-
-	case Estados_Partida::PANTALLA_PAUSA:
-	{
-		//dibujar_Fondo();
-
-		break;
 	}
 
 	case Estados_Partida::PANTALLA_WIN:
 	{
-		//dibujar_Fondo();
+		dibujar_Fondo(Fondo_Pantalla_Win);
 
 		break;
 	}
 
 	case Estados_Partida::PANTALLA_GAME_OVER:
 	{
-		//dibujar_Fondo();
+		dibujar_Fondo(Fondo_Pantalla_Game_Over);
 
 		break;
 	}
@@ -121,22 +112,12 @@ void Controlador_Partida::actualizar_Estado(unsigned char key)
 {
 	if (Estado_Actual == Estados_Partida::PANTALLA_TABLERO)
 	{
-		if (key == 27) // Escape
-		{
-			cambiar_Estado(Estados_Partida::PANTALLA_PAUSA);
-		}
+		
 	}
 
 	else if (Estado_Actual == Estados_Partida::PANTALLA_BATALLA)
 	{
-		if (key == 27) // Escape
-		{
-			cambiar_Estado(Estados_Partida::PANTALLA_PAUSA);
-		}
-	}
-
-	else if (Estado_Actual == Estados_Partida::PANTALLA_PAUSA)
-	{
+		
 	}
 
 	else if (Estado_Actual == Estados_Partida::PANTALLA_WIN)
@@ -157,23 +138,6 @@ void Controlador_Partida::mouse_Partida(Vector_2D coordenadas_mouse, bool leftCl
 
 void Controlador_Partida::actualizar_Estado(Vector_2D coordenadas_mouse, bool leftClick)
 {
-	// 1) En la pantalla de título: cualquier click (izq/der) vale para pasar al menú
-	if (Estado_Actual == Estados_Partida::PANTALLA_TABLERO)
-	{
-		cambiar_Estado(Estados_Partida::PANTALLA_BATALLA);
-		return;
-	}
-
-	// 2) Para interactuar con botones, exigimos click izquierdo
-	if (!leftClick) return;
-
-	// 3) Menú principal
-	if (Estado_Actual == Estados_Partida::PANTALLA_PAUSA)
-	{
-		return;
-	}
-
-	// 4) Ajustes
 	if (Estado_Actual == Estados_Partida::PANTALLA_WIN)
 	{
 		return;
@@ -194,11 +158,6 @@ void Controlador_Partida::actualizar_Hover(Vector_2D coordenadas_mouse)
 	}
 
 	if (Estado_Actual == Estados_Partida::PANTALLA_BATALLA)
-	{
-		
-	}
-
-	if (Estado_Actual == Estados_Partida::PANTALLA_PAUSA)
 	{
 		
 	}
