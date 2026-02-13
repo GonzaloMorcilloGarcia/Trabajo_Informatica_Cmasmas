@@ -16,6 +16,7 @@
 
 #include "funciones_globales.h"
 #include "Controlador_Audio.h"
+#include "Controlador_Partida.h"
 #include "Vector_2D.h"
 
 #include "Boton.h"
@@ -28,14 +29,7 @@ class Controlador_Juego
 
 		PANTALLA_TITULO,
 		PANTALLA_MENU,
-		PANTALLA_TABLERO,
-		PANTALLA_BATALLA,
-		PANTALLA_PAUSA,
-
-		// Estados de Victoria o Derrota //
-
-		PANTALLA_WIN,
-		PANTALLA_GAME_OVER,
+		PANTALLA_PARTIDA,
 	
 		// Estados de Ajustes y Creditos //
 
@@ -77,6 +71,7 @@ private:
 	GLuint Fondo_Pantalla_Batalla = 0;
 
 	Controlador_Audio controlador_audio;
+	Controlador_Partida controlador_partida;
 
 
 };

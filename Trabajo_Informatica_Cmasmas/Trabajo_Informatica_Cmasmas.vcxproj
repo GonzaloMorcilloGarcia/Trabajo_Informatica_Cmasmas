@@ -23,6 +23,7 @@
     <ClInclude Include="src\Ficheros_Encabezado\Color.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Controlador_Audio.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Controlador_Juego.h" />
+    <ClInclude Include="src\Ficheros_Encabezado\Controlador_Partida.h" />
     <ClInclude Include="src\Ficheros_Encabezado\funciones_globales.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Rectangulo.h" />
     <ClInclude Include="src\Ficheros_Encabezado\Vector_2D.h" />
@@ -31,6 +32,7 @@
     <ClCompile Include="src\Ficheros_Codigo\Boton.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Controlador_Audio.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Controlador_Juego.cpp" />
+    <ClCompile Include="src\Ficheros_Codigo\Controlador_Partida.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\funciones_globales.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\main.cpp" />
     <ClCompile Include="src\Ficheros_Codigo\Rectangulo.cpp" />

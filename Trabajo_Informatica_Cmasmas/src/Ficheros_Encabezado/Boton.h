@@ -10,7 +10,8 @@
 
 #include <algorithm> // Para std::min y std::max //
 #include <cmath> // Para std::lround //      
-#include <string> 
+#include <string>
+#include "ETSIDI.h"
 
 // Ficheros de Encabezado //
 

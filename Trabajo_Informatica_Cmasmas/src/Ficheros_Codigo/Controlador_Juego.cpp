@@ -21,7 +21,7 @@ void Controlador_Juego::cambiar_Estado(Estados_Juego estado_siguiente)
 	
 	iniciar_Estado();
 
-	std::cout << "Estado cambiado \n";
+	std::cout << "Estado de Controlador de Juego Actualizado \n";
 }
 
 void Controlador_Juego::iniciar_Estado()
@@ -108,8 +108,10 @@ void Controlador_Juego::iniciar_Estado()
 		break;
 	}
 
-	case Estados_Juego::PANTALLA_TABLERO:
+	case Estados_Juego::PANTALLA_PARTIDA:
 	{
+		controlador_partida.iniciar_Controlador();
+
 		Boton_Musica =
 		{
 			{960, 120},
@@ -146,26 +148,6 @@ void Controlador_Juego::iniciar_Estado()
 			"->"
 		};
 
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_BATALLA:
-	{
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_PAUSA:
-	{
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_WIN:
-	{
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_GAME_OVER:
-	{
 		break;
 	}
 
@@ -236,6 +218,10 @@ void Controlador_Juego::iniciar_Estado()
 
 	default:
 	{
+		std::cout << "Error: Estado no reconocido en Controlador_Juego.cpp/iniciar_Estado() \n";
+
+		exit(1);
+
 		break;
 	}
 
@@ -271,7 +257,7 @@ void Controlador_Juego::dibujar_Estado()
 
 	}
 
-	case Estados_Juego::PANTALLA_TABLERO:
+	case Estados_Juego::PANTALLA_PARTIDA:
 	{
 		dibujar_Fondo(Fondo_Pantalla_Tablero);
 
@@ -281,28 +267,8 @@ void Controlador_Juego::dibujar_Estado()
 		Boton_Pausa.dibujar_Boton();
 		Boton_Siguiente.dibujar_Boton();
 
-		break;
-	}
+		controlador_partida.dibujar_Estado();
 
-	case Estados_Juego::PANTALLA_BATALLA:
-	{
-		dibujar_Fondo(Fondo_Pantalla_Batalla);
-
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_PAUSA:
-	{
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_WIN:
-	{
-		break;
-	}
-
-	case Estados_Juego::PANTALLA_GAME_OVER:
-	{
 		break;
 	}
 
@@ -387,6 +353,10 @@ void Controlador_Juego::dibujar_Estado()
 
 	default:
 	{
+		std::cout << "Error: Estado no reconocido en Controlador_Juego.cpp/dibujar_Estado() \n";
+
+		exit(1);
+
 		break;
 	}
 	}
@@ -423,12 +393,9 @@ void Controlador_Juego::actualizar_Estado(unsigned char key)
 		}
 	}
 
-	else if (Estado_Actual == (Estados_Juego::PANTALLA_TABLERO)|| Estado_Actual == (Estados_Juego::PANTALLA_BATALLA) )
+	else if (Estado_Actual == Estados_Juego::PANTALLA_PARTIDA)
 	{
-		if (key == 27) // Escape
-		{
-			cambiar_Estado(Estados_Juego::PANTALLA_PAUSA);
-		}
+		
 	}
 }
 
@@ -449,7 +416,7 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 	{
 		if (Boton_Jugar.Contiene_Coordenadas(coordenadas_mouse))
 		{
-			cambiar_Estado(Estados_Juego::PANTALLA_TABLERO);
+			cambiar_Estado(Estados_Juego::PANTALLA_PARTIDA);
 
 			return;
 		}
@@ -531,7 +498,7 @@ void Controlador_Juego::actualizar_Estado(Vector_2D coordenadas_mouse, bool left
 
 	}
 
-	if (Estado_Actual == Estados_Juego::PANTALLA_TABLERO)
+	if (Estado_Actual == Estados_Juego::PANTALLA_PARTIDA)
 	{
 		if (Boton_Musica.Contiene_Coordenadas(coordenadas_mouse))
 		{
@@ -577,6 +544,7 @@ void Controlador_Juego::actualizar_Hover(Vector_2D coordenadas_mouse)
 		Boton_Pausa.actualizar_Hover(coordenadas_mouse);
 		Boton_Siguiente.actualizar_Hover(coordenadas_mouse);
 	}
+
 	if (Estado_Actual == Estados_Juego::PANTALLA_AJUSTES)
 	{
 		Boton_Menu_Principal.actualizar_Hover(coordenadas_mouse);
@@ -587,8 +555,10 @@ void Controlador_Juego::actualizar_Hover(Vector_2D coordenadas_mouse)
 		Boton_Subir_Volumen.actualizar_Hover(coordenadas_mouse);
 	}
 
-	if (Estado_Actual == Estados_Juego::PANTALLA_TABLERO)
+	if (Estado_Actual == Estados_Juego::PANTALLA_PARTIDA)
 	{
+		controlador_partida.actualizar_Hover(coordenadas_mouse);
+
 		Boton_Musica.actualizar_Hover(coordenadas_mouse);
 		Boton_Anterior.actualizar_Hover(coordenadas_mouse);
 		Boton_Pausa.actualizar_Hover(coordenadas_mouse);

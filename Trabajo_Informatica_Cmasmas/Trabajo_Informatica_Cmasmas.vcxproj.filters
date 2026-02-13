@@ -36,6 +36,9 @@
     <ClInclude Include="src\Ficheros_Encabezado\Controlador_Audio.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ficheros_Encabezado\Controlador_Partida.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ficheros_Codigo\main.cpp">
@@ -54,6 +57,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Ficheros_Codigo\Controlador_Audio.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ficheros_Codigo\Controlador_Partida.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

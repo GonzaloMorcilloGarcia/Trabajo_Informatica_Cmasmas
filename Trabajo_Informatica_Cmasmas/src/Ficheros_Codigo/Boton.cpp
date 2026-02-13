@@ -76,6 +76,8 @@ void Boton::actualizar_Hover (Vector_2D mouse)
             interior_boton.ancho_rectangulo + 2 * ancho_borde;
         borde_boton.alto_rectangulo =
             interior_boton.alto_rectangulo + 2 * ancho_borde;
+
+        ETSIDI::play("assets/sonidos/sonido_hover.wav");
     }
     else
     {
